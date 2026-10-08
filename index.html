@@ -20,7 +20,6 @@
     </header>
     <main>
       <section class="hero">
-        <p class="eyebrow">TODAY, ONE MOMENT AT A TIME</p>
         <h1>今天，留下些什么？</h1>
         <p>不用组织成一篇日记。写下一句话，剩下的交给 AI。</p>
         <form id="entry-form" class="composer">
@@ -37,28 +36,28 @@
       </nav>
 
       <section class="view active" id="today-view">
-        <div class="section-title"><div><p class="eyebrow">RAW MOMENTS</p><h2>今天的碎片</h2></div><span id="today-count" class="badge">0 条</span></div>
+        <div class="section-title"><div><h2>今天的碎片</h2></div><span id="today-count" class="badge">0 条</span></div>
         <div id="entry-list" class="empty">还没有记录。先给今天留下一句话吧。</div>
         <article class="summary-card">
-          <div class="section-title"><div><p class="eyebrow">AI'S VIEW</p><h2>今日整理</h2></div><button id="summarize-button" class="secondary">✦ 让 AI 整理</button></div>
+          <div class="section-title"><div><h2>今日整理</h2></div><button id="summarize-button" class="secondary">✦ 让 AI 整理</button></div>
           <div id="summary-content" class="summary empty-copy">当你留下几条生活碎片后，AI 会把它们温柔地整理成今天的回忆。</div>
         </article>
       </section>
 
       <section class="view" id="calendar-view">
-        <div class="section-title"><div><p class="eyebrow">LOOKING BACK</p><h2>日历</h2></div><div class="month-controls"><button id="previous-month" class="round-button">‹</button><strong id="month-title"></strong><button id="next-month" class="round-button">›</button></div></div>
+        <div class="section-title"><div><h2>日历</h2></div><div class="month-controls"><button id="previous-month" class="round-button">‹</button><strong id="month-title"></strong><button id="next-month" class="round-button">›</button></div></div>
         <div class="weekdays"><span>日</span><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span></div>
         <div id="calendar-grid" class="calendar"></div>
         <div id="selected-day-detail" class="empty detail">选择有记录的一天，看看那天发生了什么。</div>
       </section>
 
       <section class="view" id="review-view">
-        <div class="section-title"><div><p class="eyebrow">A LITTLE CLOSER</p><h2>近期回顾</h2></div></div>
+        <div class="section-title"><div><h2>近期回顾</h2></div></div>
         <div id="review-content" class="review-grid"></div>
       </section>
 
       <section class="view" id="ai-review-view">
-        <div class="section-title"><div><p class="eyebrow">TALK TO YOUR MEMORIES</p><h2>AI 回顾</h2></div></div>
+        <div class="section-title"><div><h2>AI 回顾</h2></div></div>
         <p class="review-intro">选定一段时间，让 AI 帮你串起那些散落的生活片段。回顾结束后，还可以继续聊下去。</p>
         <div class="range-panel">
           <label>开始日期<input id="review-start-date" type="date" /></label>
@@ -77,9 +76,9 @@
       </section>
 
       <section class="view" id="settings-view">
-        <div class="section-title settings-title"><div><p class="eyebrow">SYSTEM SETTINGS</p><h2>系统设置</h2></div><span class="badge green">仅保存在当前浏览器</span></div>
+        <div class="section-title settings-title"><div><h2>系统设置</h2></div><span class="badge green">仅保存在当前浏览器</span></div>
         <section id="ai-configuration" class="settings-section">
-        <div class="settings-subtitle"><p class="eyebrow">YOUR AI, YOUR WAY</p><h3>AI 配置</h3></div>
+        <div class="settings-subtitle"><h3>AI 配置</h3></div>
         <p class="settings-intro">填好以后，「让 AI 整理」就能直接使用。API Key 不会写入记录文件，也不会随 GitHub 仓库上传。</p>
         <form id="settings-form" class="settings-panel">
           <div class="settings-grid">
@@ -92,15 +91,15 @@
         </form>
         </section>
         <section id="data-management" class="settings-section data-section">
-          <div class="settings-subtitle"><p class="eyebrow">YOUR DATA, IN YOUR HANDS</p><h3>数据管理</h3></div>
+          <div class="settings-subtitle"><h3>数据管理</h3></div>
           <p class="data-intro">备份文件包含日记、AI 整理与回顾对话；不会包含 API Key 或 GitHub Token。</p>
           <div class="backup-grid">
             <article class="backup-card">
-              <p class="eyebrow">LOCAL FILE</p><h2>本地备份</h2><p>导出 JSON 文件，方便离线保存或迁移到另一台设备。</p>
+              <h2>本地备份</h2><p>导出 JSON 文件，方便离线保存或迁移到另一台设备。</p>
               <div class="backup-actions"><button id="backup-export" class="secondary" type="button">导出备份文件</button><button id="backup-import" class="secondary" type="button">导入备份文件</button><input id="backup-file" type="file" accept="application/json,.json" hidden /></div>
             </article>
             <article class="backup-card gist-card">
-              <p class="eyebrow">GITHUB GIST SYNC</p><h2>GitHub Gist 同步</h2><p>使用你自己的私密 Gist 保存备份。Token 仅保存在当前浏览器。</p>
+              <h2>GitHub Gist 同步</h2><p>使用你自己的私密 Gist 保存备份。Token 仅保存在当前浏览器。</p>
               <div class="gist-fields">
                 <label>GitHub Token<input id="github-token" type="password" autocomplete="off" placeholder="github_pat_..." /></label>
                 <label>Gist ID <input id="gist-id" type="text" placeholder="首次备份会自动创建" /></label>
