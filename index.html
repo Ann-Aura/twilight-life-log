@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#f8efe5" />
+  <title>暮光记录 · AI 生活日志</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="review-chat.css" />
+  <link rel="stylesheet" href="export.css" />
+  <link rel="stylesheet" href="system-settings.css" />
+  <link rel="stylesheet" href="backup.css" />
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <a class="brand" href="#">☾ <span>暮光记录</span></a>
+      <p id="today-label"></p>
+      <div class="settings-menu-wrap"><button id="settings-button" class="round-button" title="系统设置" aria-label="系统设置">⚙</button><div id="settings-menu" class="settings-menu"><button data-settings-target="ai-configuration">✦ AI 配置</button><button data-settings-target="data-management">▣ 数据管理</button></div></div>
+    </header>
+    <main>
+      <section class="hero">
+        <p class="eyebrow">TODAY, ONE MOMENT AT A TIME</p>
+        <h1>今天，留下些什么？</h1>
+        <p>不用组织成一篇日记。写下一句话，剩下的交给 AI。</p>
+        <form id="entry-form" class="composer">
+          <textarea id="entry-input" rows="3" maxlength="1000" placeholder="比如：傍晚散步时看到很漂亮的云，突然觉得最近应该慢一点……"></textarea>
+          <div><span id="character-count">0 / 1000</span><button id="voice-button" class="voice-button" type="button">◉ 语音输入</button><button class="primary" type="submit">留下这一刻 <span>↵</span></button></div>
+        </form>
+      </section>
+
+      <nav class="tabs" aria-label="主导航">
+        <button class="tab active" data-view="today-view">今天</button>
+        <button class="tab" data-view="calendar-view">日历</button>
+        <button class="tab" data-view="review-view">回顾</button>
+        <button class="tab" data-view="ai-review-view">AI 回顾</button>
+      </nav>
+
+      <section class="view active" id="today-view">
+        <div class="section-title"><div><p class="eyebrow">RAW MOMENTS</p><h2>今天的碎片</h2></div><span id="today-count" class="badge">0 条</span></div>
+        <div id="entry-list" class="empty">还没有记录。先给今天留下一句话吧。</div>
+        <article class="summary-card">
+          <div class="section-title"><div><p class="eyebrow">AI'S VIEW</p><h2>今日整理</h2></div><button id="summarize-button" class="secondary">✦ 让 AI 整理</button></div>
+          <div id="summary-content" class="summary empty-copy">当你留下几条生活碎片后，AI 会把它们温柔地整理成今天的回忆。</div>
+        </article>
+      </section>
+
+      <section class="view" id="calendar-view">
+        <div class="section-title"><div><p class="eyebrow">LOOKING BACK</p><h2>日历</h2></div><div class="month-controls"><button id="previous-month" class="round-button">‹</button><strong id="month-title"></strong><button id="next-month" class="round-button">›</button></div></div>
+        <div class="weekdays"><span>日</span><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span></div>
+        <div id="calendar-grid" class="calendar"></div>
+        <div id="selected-day-detail" class="empty detail">选择有记录的一天，看看那天发生了什么。</div>
+      </section>
+
+      <section class="view" id="review-view">
+        <div class="section-title"><div><p class="eyebrow">A LITTLE CLOSER</p><h2>近期回顾</h2></div></div>
+        <div id="review-content" class="review-grid"></div>
+      </section>
+
+      <section class="view" id="ai-review-view">
+        <div class="section-title"><div><p class="eyebrow">TALK TO YOUR MEMORIES</p><h2>AI 回顾</h2></div></div>
+        <p class="review-intro">选定一段时间，让 AI 帮你串起那些散落的生活片段。回顾结束后，还可以继续聊下去。</p>
+        <div class="range-panel">
+          <label>开始日期<input id="review-start-date" type="date" /></label>
+          <span class="range-separator">至</span>
+          <label>结束日期<input id="review-end-date" type="date" /></label>
+          <button id="start-review" class="primary" type="button">开始回顾</button>
+        </div>
+        <p id="review-range-note" class="range-note">请选择一段有记录的时间。</p>
+        <div id="chat-history" class="chat-history" aria-live="polite"></div>
+        <form id="chat-form" class="chat-composer">
+          <label class="sr-only" for="chat-input">继续问问 AI</label>
+          <textarea id="chat-input" rows="2" placeholder="比如：那段时间我最常关注什么？" disabled></textarea>
+          <button id="send-chat" class="primary" type="submit" disabled>发送</button>
+        </form>
+        <button id="clear-chat" class="text-button clear-chat" type="button">清除本次回顾对话</button>
+      </section>
+
+      <section class="view" id="settings-view">
+        <div class="section-title settings-title"><div><p class="eyebrow">SYSTEM SETTINGS</p><h2>系统设置</h2></div><span class="badge green">仅保存在当前浏览器</span></div>
+        <section id="ai-configuration" class="settings-section">
+        <div class="settings-subtitle"><p class="eyebrow">YOUR AI, YOUR WAY</p><h3>AI 配置</h3></div>
+        <p class="settings-intro">填好以后，「让 AI 整理」就能直接使用。API Key 不会写入记录文件，也不会随 GitHub 仓库上传。</p>
+        <form id="settings-form" class="settings-panel">
+          <div class="settings-grid">
+            <label>API 地址<input id="api-base-url" type="url" placeholder="https://api.openai.com/v1" required /></label>
+            <label>API Key<input id="api-key" type="password" placeholder="sk-..." autocomplete="off" required /></label>
+            <label>模型<input id="model-name" type="text" list="model-options" placeholder="例如 gpt-4o-mini" required /><datalist id="model-options"></datalist></label>
+          </div>
+          <label class="instruction">整理要求<textarea id="system-prompt" rows="5"></textarea></label>
+          <div class="settings-actions"><button id="load-models" type="button" class="secondary">拉取模型</button><button type="submit" class="primary">保存配置</button><button id="clear-settings" type="button" class="text-button">清除配置</button></div>
+        </form>
+        </section>
+        <section id="data-management" class="settings-section data-section">
+          <div class="settings-subtitle"><p class="eyebrow">YOUR DATA, IN YOUR HANDS</p><h3>数据管理</h3></div>
+          <p class="data-intro">备份文件包含日记、AI 整理与回顾对话；不会包含 API Key 或 GitHub Token。</p>
+          <div class="backup-grid">
+            <article class="backup-card">
+              <p class="eyebrow">LOCAL FILE</p><h2>本地备份</h2><p>导出 JSON 文件，方便离线保存或迁移到另一台设备。</p>
+              <div class="backup-actions"><button id="backup-export" class="secondary" type="button">导出备份文件</button><button id="backup-import" class="secondary" type="button">导入备份文件</button><input id="backup-file" type="file" accept="application/json,.json" hidden /></div>
+            </article>
+            <article class="backup-card gist-card">
+              <p class="eyebrow">GITHUB GIST SYNC</p><h2>GitHub Gist 同步</h2><p>使用你自己的私密 Gist 保存备份。Token 仅保存在当前浏览器。</p>
+              <div class="gist-fields">
+                <label>GitHub Token<input id="github-token" type="password" autocomplete="off" placeholder="github_pat_..." /></label>
+                <label>Gist ID <input id="gist-id" type="text" placeholder="首次备份会自动创建" /></label>
+                <label>备份文件名<input id="gist-file-name" type="text" value="twilight-life-log-backup.json" /></label>
+              </div>
+              <div class="auto-backup"><label><input id="auto-backup-enabled" type="checkbox" /> 启用自动备份</label><label>间隔（分钟）<input id="auto-backup-minutes" type="number" min="5" max="1440" value="30" /></label><span>仅在网页打开期间生效</span></div>
+              <div class="backup-actions"><button id="save-github-config" class="secondary" type="button">保存 GitHub 配置</button><button id="sync-to-github" class="primary" type="button">备份到 GitHub</button><button id="import-from-github" class="secondary" type="button">从 GitHub 导入</button></div>
+              <p id="gist-status" class="gist-status">需要细粒度 Token 的「Gists: write」权限。</p>
+            </article>
+          </div>
+          <article class="export-panel">
+            <div><h2>导出日记</h2><p>按日期导出整理后的日记，也可以附上当时留下的原始碎片。</p></div>
+            <div class="export-controls">
+              <label>开始日期<input id="export-start-date" type="date" /></label><span>至</span><label>结束日期<input id="export-end-date" type="date" /></label>
+              <label class="check-label"><input id="include-raw-records" type="checkbox" /> 附上原始碎片</label>
+              <button id="export-txt" class="secondary" type="button">导出 TXT</button><button id="export-html" class="primary" type="button">导出 HTML</button>
+            </div>
+          </article>
+          <p class="sync-hint">GitHub 备份与多端同步将在这里加入。</p>
+        </section>
+      </section>
+    </main>
+    <footer>你只负责留下生活，整理交给 AI。</footer>
+  </div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+  <script src="review-chat.js"></script>
+  <script src="export.js"></script>
+  <script src="voice.js"></script>
+  <script src="backup.js"></script>
+</body>
+</html>
