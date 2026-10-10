@@ -52,7 +52,7 @@
     const dates = Object.keys(records).filter((date) => date >= range.start && date <= range.end).sort();
     const days = dates.map((date) => {
       const record = records[date];
-      const entries = (record.entries || []).map((entry) => `- ${entry.text}`).join("\n");
+      const entries = (record.entries || []).map((entry) => `- ${entry.text || "（图片记录）"}${entry.images?.length ? `（附 ${entry.images.length} 张图片）` : ""}`).join("\n");
       return `【${date}】\n原始记录：\n${entries || "（无）"}${record.summary ? `\nAI 当日整理：\n${record.summary.text}` : ""}`;
     });
     return { dates, content: days.join("\n\n") };

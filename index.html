@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="export.css" />
   <link rel="stylesheet" href="system-settings.css" />
   <link rel="stylesheet" href="backup.css" />
+  <link rel="stylesheet" href="journal-media.css" />
 </head>
 <body>
   <div class="shell">
@@ -24,7 +25,9 @@
         <p>不用组织成一篇日记。写下一句话，剩下的交给 AI。</p>
         <form id="entry-form" class="composer">
           <textarea id="entry-input" rows="3" maxlength="1000" placeholder="比如：傍晚散步时看到很漂亮的云，突然觉得最近应该慢一点……"></textarea>
-          <div><span id="character-count">0 / 1000</span><button id="voice-button" class="voice-button" type="button">◉ 语音输入</button><button class="primary" type="submit">留下这一刻 <span>↵</span></button></div>
+          <div id="entry-image-preview" class="image-preview-list"></div>
+          <input id="entry-image-input" type="file" accept="image/*" multiple hidden />
+          <div><span id="character-count">0 / 1000</span><button id="add-image-button" class="attachment-button" type="button">▧ 添加图片</button><button id="voice-button" class="voice-button" type="button">◉ 语音输入</button><button class="primary" type="submit">留下这一刻 <span>↵</span></button></div>
         </form>
       </section>
 
@@ -49,6 +52,16 @@
         <div class="weekdays"><span>日</span><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span></div>
         <div id="calendar-grid" class="calendar"></div>
         <div id="selected-day-detail" class="empty detail">选择有记录的一天，看看那天发生了什么。</div>
+        <section class="history-editor" aria-labelledby="history-editor-title">
+          <div class="history-editor-heading"><div><h3 id="history-editor-title">补写这一天</h3><p id="history-editor-copy">选择日期后，可以补写或修改这一天的记录。</p></div><label>日期<input id="history-date" type="date" /></label></div>
+          <form id="history-entry-form" class="history-entry-form">
+            <textarea id="history-entry-input" rows="3" maxlength="1000" placeholder="写下那天发生的事、想到的事，或当时的感受……"></textarea>
+            <div id="history-image-preview" class="image-preview-list"></div>
+            <input id="history-image-input" type="file" accept="image/*" multiple hidden />
+            <div class="history-actions"><button id="history-add-image" class="attachment-button" type="button">▧ 添加图片</button><button id="history-cancel-edit" class="text-button" type="button" hidden>取消编辑</button><button id="history-save" class="primary" type="submit">保存到这一天</button></div>
+          </form>
+          <button id="history-summarize" class="secondary history-summarize" type="button">✦ 整理这一天</button>
+        </section>
       </section>
 
       <section class="view" id="review-view">
